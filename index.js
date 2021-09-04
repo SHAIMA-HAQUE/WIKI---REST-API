@@ -16,6 +16,7 @@ app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/wikiDB",{useNewUrlParser:true});
 
+//////////////////////////Requests targetting all articles/////////////////////////////////////
 app.route("/articles")
 .get(function(req,res){
   Article.find(function(err,foundArticles){
@@ -53,6 +54,22 @@ app.route("/articles")
     }
   })
 });
+
+//////////////////////////////////Requests Targetting a Specific Article////////////////////////////////
+
+app.route("/articles/:articleTitle") 
+.get(function(req,res){
+  Article.findOne({title:req.params.articleTitle },function(err,foundArticle){
+    if(foundArticle){
+      res.send(foundArticle);
+    }else{
+      res.send("No articles matching that title was found!");
+    }
+  })
+})
+.put()
+.delete()
+
 
 const articleSchema = {
   title:String,
