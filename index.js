@@ -67,7 +67,18 @@ app.route("/articles/:articleTitle")
     }
   })
 })
-.put()
+.put(function(req,res){
+  Article.update(
+    {title:req.params.articleTitle},
+    {title: req.body.title, content : req.body.content},
+    {overwrite: true},
+    function(err){
+      if(!err){
+        res.send("Succesfully updated article");
+      }
+    }
+    )
+})
 .delete()
 
 
