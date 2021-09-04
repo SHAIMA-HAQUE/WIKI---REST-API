@@ -79,7 +79,19 @@ app.route("/articles/:articleTitle")
     }
     )
 })
-.delete()
+.patch(function(req,res){
+  Article.update(
+    {title:req.params.articleTitle},
+    {$set: req.body},
+    function(err){
+      if(!err){
+        res.send("Succesfully updated article");
+      }else{
+        res.send(err);
+      }
+    }
+    )
+});   
 
 
 const articleSchema = {
